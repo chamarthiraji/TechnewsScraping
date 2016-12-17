@@ -24,9 +24,9 @@ app.use(bodyParser.urlencoded({
 
 // Make public a static dir
 app.use(express.static("public"));
+var port = process.env.PORT || 3000;
 
 //Database configuration with mongoose
-//mongoose.connect("mongodb://localhost/week18hwdb");
 mongoose.connect("mongodb://heroku_ccqbl3hs:j50o1k7ee9pjb0rf7bqcfs7ks9@ds151137.mlab.com:51137/heroku_ccqbl3hs");
 var db = mongoose.connection;
 
