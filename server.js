@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 // Make public a static dir
 app.use(express.static("public"));
 var port = process.env.PORT || 3000;
-
+console.log("port:"+port);
 //Database configuration with mongoose
 mongoose.connect("mongodb://heroku_ccqbl3hs:j50o1k7ee9pjb0rf7bqcfs7ks9@ds151137.mlab.com:51137/heroku_ccqbl3hs");
 var db = mongoose.connection;
@@ -43,10 +43,12 @@ db.once("open", function() {
 //Routes
 // Simple index route
 app.get("/", function(req, res) {
+  console.log("inside get /");
   res.send(index.html);
 });
 
 app.get("/scrape",function(req,res){
+  console.log("inside /scrape");
 	// Make a request call to grab the HTML body from the site of your choice
 	request('http://www.technewsworld.com/', function (error, response, html) {
 
@@ -89,6 +91,7 @@ app.get("/scrape",function(req,res){
 
 // This will get the articles we scraped from the mongoDB
 app.get("/technews", function(req, res) {
+  console.log("inside /technews");
   // Grab every doc in the Articles array
   Technews.find({}, function(error, doc) {
     // Log any errors
@@ -174,6 +177,6 @@ app.post("/technews/:noteId/delete",function(req,res){
 }); // end of - app.post("/technews/:noteId/delete
 
 // Listen on port 3000
-app.listen(3000, function() {
-  console.log("App running on port 3000!");
+app.listen(port, function() {
+  console.log("App running on port:"+port+"!");
 });
